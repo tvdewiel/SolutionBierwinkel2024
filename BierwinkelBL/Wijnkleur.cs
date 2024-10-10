@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BierwinkelBL
 {
-    public enum Biervolume
+    public enum Wijnkleur
     {
-        cl25,cl33,cl50,cl75,cl100,cl150
+        Rood,Wit,Rose
     }
 }

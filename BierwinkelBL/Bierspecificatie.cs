@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace BierwinkelBL
 {
-    public class Bierspecificatie
+    public class Bierspecificatie : Drankspecificatie
     {
-        public Bierspecificatie(Bierkleur? kleur, string brouwerij, Biervolume? volume, double? alcoholPercentage,string herkomstLand)
+        public Bierspecificatie(Bierkleur? kleur, string brouwerij, Drankvolume? volume, double? alcoholPercentage,string herkomstLand) : base(brouwerij,volume,alcoholPercentage,herkomstLand)
         {
-            Kleur = kleur;
-            Brouwerij = brouwerij;
-            Volume = volume;
-            if (alcoholPercentage < 0) throw new Exception("percentage <0");
-            AlcoholPercentage = alcoholPercentage;
-            HerkomstLand = herkomstLand;
+            Kleur = kleur;           
         }
 
         public Bierkleur? Kleur { get; private set; }
-        public string Brouwerij { get; private set; }
-        public Biervolume? Volume { get; private set; }
-        public double? AlcoholPercentage { get; private set; }
-        public string HerkomstLand { get ; private set; }
+       
         public override string ToString()
         {
             return $"{Kleur},{Brouwerij},{Volume},{AlcoholPercentage},{HerkomstLand}";
+        }
+        public override bool VoldoetAanSpecificatie(Drankspecificatie spec)
+        {
+            if (!base.VoldoetAanSpecificatie(spec)) return false;
+            if (spec.GetType()!=typeof(Bierspecificatie)) return false;
+            if (((Bierspecificatie)spec).Kleur != null && ((Bierspecificatie)spec).Kleur != Kleur) return false;
+            
+            return true;
         }
     }
 }

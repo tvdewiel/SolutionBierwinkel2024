@@ -8,28 +8,25 @@ namespace BierwinkelBL
 {
     public class Inventaris
     {
-        public Dictionary<string,Bier> Biertjes =new ();
-        public List<Bier> ZoekBier(Bierspecificatie bier)
+        public Dictionary<string,Drank> Dranken =new ();
+        public List<Drank> ZoekDrank(Drankspecificatie drank)
         {
-            List<Bier> gevondenBiertjes=new List<Bier>();
-            foreach(Bier b in Biertjes.Values)
+            List<Drank> gevondenDranken=new ();
+            foreach(Drank d in Dranken.Values)
             {
-                if (bier.Kleur !=null && bier.Kleur != b.Bierspecificatie.Kleur) continue;
-                if (bier.Brouwerij != null && bier.Brouwerij.Length > 0 && bier.Brouwerij != b.Bierspecificatie.Brouwerij) continue;
-                if (bier.Volume!=null && bier.Volume != b.Bierspecificatie.Volume) continue;
-                if (bier.AlcoholPercentage!=null && bier.AlcoholPercentage!=b.Bierspecificatie.AlcoholPercentage) continue;
-                gevondenBiertjes.Add(b);
+                if (d.Drankspecificatie.VoldoetAanSpecificatie(drank))
+                    gevondenDranken.Add(d);
             }
-            return gevondenBiertjes;
+            return gevondenDranken;
         }
-        public void VoegBierToe(double prijsPerStuk,string naam,Bierspecificatie specificatie,Setgrootte minimumHoeveelheid)
+        public void VoegDrankToe(double prijsPerStuk,string naam,Drankspecificatie specificatie,Setgrootte minimumHoeveelheid)
         {
-            Bier bier=new Bier(prijsPerStuk,naam,specificatie,minimumHoeveelheid);
-            if (!Biertjes.ContainsKey(bier.Naam)) Biertjes.Add(bier.Naam,bier);
+            Drank drank=new Drank(prijsPerStuk, naam,minimumHoeveelheid,specificatie);
+            if (!Dranken.ContainsKey(drank.Naam)) Dranken.Add(drank.Naam,drank);
         }
-        public Bier SelecteerBier(string naam)
+        public Drank SelecteerDrank(string naam)
         {
-            if (Biertjes.ContainsKey(naam)) return Biertjes[naam];
+            if (Dranken.ContainsKey(naam)) return Dranken[naam];
             return null;
         }
     }
